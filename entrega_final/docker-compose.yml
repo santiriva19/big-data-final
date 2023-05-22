@@ -1,0 +1,47 @@
+version: "3.1"
+services:
+  scheduler:
+    image: daskdev/dask
+    hostname: dask-scheduler
+    ports:
+      - "8786:8786"
+      - "8787:8787"
+    command: ["dask-scheduler"]
+    networks:
+      - dask_net
+    volumes:
+      - ./notebooks:/home/jovyan/work
+
+  worker:
+    image: daskdev/dask
+    command: dask-worker tcp://scheduler:8786
+    environment:
+      - DASK_SCHEDULER_ADDRESS=tcp://scheduler:8786
+    volumes:
+      - ./notebooks:/home/jovyan/work
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: 7G
+    networks:
+      - dask_net
+
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile-jupyter
+    image: jupyter/scipy-notebook
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/work
+    command: start-notebook.sh --NotebookApp.default_url=/lab
+    environment:
+      - DASK_SCHEDULER_ADDRESS="tcp://scheduler:8786"
+    networks:
+      - dask_net
+
+networks:
+  dask_net:
+    driver: bridge

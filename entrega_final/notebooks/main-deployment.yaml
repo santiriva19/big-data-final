@@ -1,0 +1,40 @@
+###
+### A complete description of a Prefect Deployment for flow 'flujo_principal'
+###
+name: despliegue_main
+description: null
+version: 9beaf7b18c9a764c5e681834cfb79f87
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+work_pool_name: null
+tags: []
+parameters: {}
+schedule: null
+is_schedule_active: null
+infra_overrides: {}
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  block_type_slug: process
+  _block_type_slug: process
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: flujo_principal
+manifest_path: null
+storage: null
+path: /home/jovyan/work
+entrypoint: index.py:main
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties: {}
+  required: null
+  definitions: null
+timestamp: '2023-05-22T08:25:48.334348+00:00'

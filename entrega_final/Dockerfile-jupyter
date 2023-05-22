@@ -1,0 +1,8 @@
+FROM jupyter/minimal-notebook
+
+RUN conda install -c conda-forge dask distributed sqlalchemy psycopg2 matplotlib scikit-learn geopandas fuzzywuzzy WordCloud KModes prefect
+
+
+CMD ["start-notebook.sh", "--NotebookApp.token=''"]
+
+EXPOSE 8888
